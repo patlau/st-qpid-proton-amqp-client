@@ -1,0 +1,7 @@
+AMQPConnection.cls
+AMQPWrapper.cls
+AMQPData.cls
+AMQPError.cls
+AMQPMessage.cls
+AMQPMessenger.cls
+AMQPSubscription.cls
