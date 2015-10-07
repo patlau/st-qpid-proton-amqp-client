@@ -1,20 +1,9 @@
 ExternalLibrary subclass: #QpidProtonDLL
 instanceVariableNames: '
-	struct_pn_error_t
-struct_pn_messenger_t
-struct_pn_subscription_t
-struct_pn_message_t
-struct_pn_decimal128_t
+	struct_pn_decimal128_t
 struct_pn_uuid_t
 struct_pn_bytes_t
-struct_pn_connection_t
-struct_pn_session_t
-struct_pn_link_t
-struct_pn_delivery_t
-struct_pn_collector_t
-struct_pn_transport_t
 struct_pn_atom_t
-struct_pn_data_t
 '
 classVariableNames: '
 '
@@ -120,34 +109,6 @@ initialize
 
 initializeStructs
 | variables |
-	struct_pn_error_t := Structure new.
-	variables := Array new: 1.
-	variables at: 1 put: ((VStructure structObj: struct_pn_error_t) passedBy: #value). "pn_error_t"
-	struct_pn_error_t addElements:
-		{#''}
-		variables: variables startingAt: 0.
-
-	struct_pn_messenger_t := Structure new.
-	variables := Array new: 1.
-	variables at: 1 put: ((VStructure structObj: struct_pn_messenger_t) passedBy: #value). "pn_messenger_t"
-	struct_pn_messenger_t addElements:
-		{#''}
-		variables: variables startingAt: 0.
-
-	struct_pn_subscription_t := Structure new.
-	variables := Array new: 1.
-	variables at: 1 put: ((VStructure structObj: struct_pn_subscription_t) passedBy: #value). "pn_subscription_t"
-	struct_pn_subscription_t addElements:
-		{#''}
-		variables: variables startingAt: 0.
-
-	struct_pn_message_t := Structure new.
-	variables := Array new: 1.
-	variables at: 1 put: ((VStructure structObj: struct_pn_message_t) passedBy: #value). "pn_message_t"
-	struct_pn_message_t addElements:
-		{#''}
-		variables: variables startingAt: 0.
-
 	struct_pn_decimal128_t := Structure new.
 	variables := Array new: 1.
 	variables at: 1 put: VDWord new "Uknown". "char"
@@ -170,48 +131,6 @@ initializeStructs
 		{#size #start}
 		variables: variables startingAt: 0.
 
-	struct_pn_connection_t := Structure new.
-	variables := Array new: 1.
-	variables at: 1 put: ((VStructure structObj: struct_pn_connection_t) passedBy: #value). "pn_connection_t"
-	struct_pn_connection_t addElements:
-		{#''}
-		variables: variables startingAt: 0.
-
-	struct_pn_session_t := Structure new.
-	variables := Array new: 1.
-	variables at: 1 put: ((VStructure structObj: struct_pn_session_t) passedBy: #value). "pn_session_t"
-	struct_pn_session_t addElements:
-		{#''}
-		variables: variables startingAt: 0.
-
-	struct_pn_link_t := Structure new.
-	variables := Array new: 1.
-	variables at: 1 put: ((VStructure structObj: struct_pn_link_t) passedBy: #value). "pn_link_t"
-	struct_pn_link_t addElements:
-		{#''}
-		variables: variables startingAt: 0.
-
-	struct_pn_delivery_t := Structure new.
-	variables := Array new: 1.
-	variables at: 1 put: ((VStructure structObj: struct_pn_delivery_t) passedBy: #value). "pn_delivery_t"
-	struct_pn_delivery_t addElements:
-		{#''}
-		variables: variables startingAt: 0.
-
-	struct_pn_collector_t := Structure new.
-	variables := Array new: 1.
-	variables at: 1 put: ((VStructure structObj: struct_pn_collector_t) passedBy: #value). "pn_collector_t"
-	struct_pn_collector_t addElements:
-		{#''}
-		variables: variables startingAt: 0.
-
-	struct_pn_transport_t := Structure new.
-	variables := Array new: 1.
-	variables at: 1 put: ((VStructure structObj: struct_pn_transport_t) passedBy: #value). "pn_transport_t"
-	struct_pn_transport_t addElements:
-		{#''}
-		variables: variables startingAt: 0.
-
 	struct_pn_atom_t := Structure new.
 	variables := Array new: 2.
 	variables at: 1 put: VDWord new "Uknown". "pn_type_t"
@@ -220,148 +139,8 @@ initializeStructs
 		{#type #u}
 		variables: variables startingAt: 0.
 
-	struct_pn_data_t := Structure new.
-	variables := Array new: 1.
-	variables at: 1 put: ((VStructure structObj: struct_pn_data_t) passedBy: #value). "pn_data_t"
-	struct_pn_data_t addElements:
-		{#''}
-		variables: variables startingAt: 0.
-
 
 !"end initializeStructs "
-
-
-initializeError
-	| variables params |
-
-	"PN_EXTERN const char *pn_code(int code);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new. "int"
-
-	self
-		newProcedureNamed: #'pn_code'
-		paramVars: params	
-		callingConvention: #C 
-		returns: ((VString "concreteClass" passedBy: #reference)).
-
-	"PN_EXTERN pn_error_t *pn_error(void);"
-	params := Array new: 0.
-
-	self
-		newProcedureNamed: #'pn_error'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Pointer").
-
-	"PN_EXTERN void pn_error_free(pn_error_t *error);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-
-	self
-		newProcedureNamed: #'pn_error_free'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-	"PN_EXTERN void pn_error_clear(pn_error_t *error);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-
-	self
-		newProcedureNamed: #'pn_error_clear'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-	"PN_EXTERN int pn_error_set(pn_error_t *error, int code, const char *text);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-	params at: 2 put: VDWord new. "int"
-	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
-
-	self
-		newProcedureNamed: #'pn_error_set'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_error_vformat(pn_error_t *error, int code, const char *fmt, va_list ap);"
-	params := Array new: 4.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-	params at: 2 put: VDWord new. "int"
-	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
-	params at: 4 put: VDWord new "Uknown". "va_list"
-
-	self
-		newProcedureNamed: #'pn_error_vformat'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_error_format(pn_error_t *error, int code, const char *fmt, ...);"
-	params := Array new: 4.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-	params at: 2 put: VDWord new. "int"
-	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
-	params at: 4 put: VDWord new "Uknown". "array"
-
-	self
-		newProcedureNamed: #'pn_error_format'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_error_code(pn_error_t *error);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-
-	self
-		newProcedureNamed: #'pn_error_code'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN const char *pn_error_text(pn_error_t *error);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-
-	self
-		newProcedureNamed: #'pn_error_text'
-		paramVars: params	
-		callingConvention: #C 
-		returns: ((VString "concreteClass" passedBy: #reference)).
-
-	"PN_EXTERN int pn_error_copy(pn_error_t *error, pn_error_t *src);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-	params at: 2 put: VDWord new "Pointer". "pn_error_t*"
-
-	self
-		newProcedureNamed: #'pn_error_copy'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-
-!"end initializeError "
-
-
-initializeTypes
-	| variables params |
-
-	"PN_EXTERN pn_bytes_t pn_bytes(size_t size, const char *start);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new. "size_t"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-
-	self
-		newProcedureNamed: #'pn_bytes'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (((VStructure structObj: struct_pn_bytes_t) passedBy: #value)).
-
-
-!"end initializeTypes "
 
 
 initializeMessenger
@@ -1029,6 +808,24 @@ initializeMessenger
 
 
 !"end initializeMessenger "
+
+
+initializeTypes
+	| variables params |
+
+	"PN_EXTERN pn_bytes_t pn_bytes(size_t size, const char *start);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new. "size_t"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+
+	self
+		newProcedureNamed: #'pn_bytes'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (((VStructure structObj: struct_pn_bytes_t) passedBy: #value)).
+
+
+!"end initializeTypes "
 
 
 initializeCodec
@@ -2624,24 +2421,119 @@ initializeMessage
 !"end initializeMessage "
 
 
-struct_pn_error_t
-	^struct_pn_error_t.
-!"end struct_pn_error_t "
+initializeError
+	| variables params |
+
+	"PN_EXTERN const char *pn_code(int code);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new. "int"
+
+	self
+		newProcedureNamed: #'pn_code'
+		paramVars: params	
+		callingConvention: #C 
+		returns: ((VString "concreteClass" passedBy: #reference)).
+
+	"PN_EXTERN pn_error_t *pn_error(void);"
+	params := Array new: 0.
+
+	self
+		newProcedureNamed: #'pn_error'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Pointer").
+
+	"PN_EXTERN void pn_error_free(pn_error_t *error);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+
+	self
+		newProcedureNamed: #'pn_error_free'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN void pn_error_clear(pn_error_t *error);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+
+	self
+		newProcedureNamed: #'pn_error_clear'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_error_set(pn_error_t *error, int code, const char *text);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+	params at: 2 put: VDWord new. "int"
+	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
+
+	self
+		newProcedureNamed: #'pn_error_set'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new).
+
+	"PN_EXTERN int pn_error_vformat(pn_error_t *error, int code, const char *fmt, va_list ap);"
+	params := Array new: 4.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+	params at: 2 put: VDWord new. "int"
+	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
+	params at: 4 put: VDWord new "Uknown". "va_list"
+
+	self
+		newProcedureNamed: #'pn_error_vformat'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new).
+
+	"PN_EXTERN int pn_error_format(pn_error_t *error, int code, const char *fmt, ...);"
+	params := Array new: 4.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+	params at: 2 put: VDWord new. "int"
+	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
+	params at: 4 put: VDWord new "Uknown". "array"
+
+	self
+		newProcedureNamed: #'pn_error_format'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new).
+
+	"PN_EXTERN int pn_error_code(pn_error_t *error);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+
+	self
+		newProcedureNamed: #'pn_error_code'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new).
+
+	"PN_EXTERN const char *pn_error_text(pn_error_t *error);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+
+	self
+		newProcedureNamed: #'pn_error_text'
+		paramVars: params	
+		callingConvention: #C 
+		returns: ((VString "concreteClass" passedBy: #reference)).
+
+	"PN_EXTERN int pn_error_copy(pn_error_t *error, pn_error_t *src);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+	params at: 2 put: VDWord new "Pointer". "pn_error_t*"
+
+	self
+		newProcedureNamed: #'pn_error_copy'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new).
 
 
-struct_pn_messenger_t
-	^struct_pn_messenger_t.
-!"end struct_pn_messenger_t "
-
-
-struct_pn_subscription_t
-	^struct_pn_subscription_t.
-!"end struct_pn_subscription_t "
-
-
-struct_pn_message_t
-	^struct_pn_message_t.
-!"end struct_pn_message_t "
+!"end initializeError "
 
 
 struct_pn_decimal128_t
@@ -2659,44 +2551,9 @@ struct_pn_bytes_t
 !"end struct_pn_bytes_t "
 
 
-struct_pn_connection_t
-	^struct_pn_connection_t.
-!"end struct_pn_connection_t "
-
-
-struct_pn_session_t
-	^struct_pn_session_t.
-!"end struct_pn_session_t "
-
-
-struct_pn_link_t
-	^struct_pn_link_t.
-!"end struct_pn_link_t "
-
-
-struct_pn_delivery_t
-	^struct_pn_delivery_t.
-!"end struct_pn_delivery_t "
-
-
-struct_pn_collector_t
-	^struct_pn_collector_t.
-!"end struct_pn_collector_t "
-
-
-struct_pn_transport_t
-	^struct_pn_transport_t.
-!"end struct_pn_transport_t "
-
-
 struct_pn_atom_t
 	^struct_pn_atom_t.
 !"end struct_pn_atom_t "
-
-
-struct_pn_data_t
-	^struct_pn_data_t.
-!"end struct_pn_data_t "
 
 
 pn_code: code 

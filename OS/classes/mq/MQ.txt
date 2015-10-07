@@ -1,5 +1,3 @@
-_if System isInVW not
 Promise.cls
-_endif
 MQEventBus.cls
 MQWorker.cls

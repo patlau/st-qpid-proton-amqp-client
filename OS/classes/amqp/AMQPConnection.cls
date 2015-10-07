@@ -26,7 +26,9 @@ connectAddress: aString timeout: anInteger
 
 
 copyDLL
-	^ExternalLibrary copyDLL: (Array with: 'qpid-proton').
+	(ExternalLibrary respondsTo: #copyDLL:) ifTrue: [
+		^ExternalLibrary copyDLL: (Array with: 'qpid-proton').
+	].
 !"end copyDLL "
 
 

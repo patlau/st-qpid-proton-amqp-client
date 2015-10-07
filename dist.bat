@@ -24,4 +24,3 @@ for %%f in (ModelClasses\*.txt) do (
 	echo _include %%f >> %DST%\Model.txt
 )
 
-pause

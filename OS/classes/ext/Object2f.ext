@@ -1,0 +1,18 @@
+Object SecondaryFile !
+
+
+!Object class methods!
+
+
+!"End of class methods block"
+
+
+!Object methods!
+
+
+isNilOrBlank
+	^self isNil.
+!"end isNilOrBlank "
+
+
+!"End of methods block"

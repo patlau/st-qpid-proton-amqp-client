@@ -7,6 +7,7 @@ instanceVariableNames: '
 	state
 	modelClasses
 	destDir
+	srcDir
 '
 classVariableNames: '
 '
@@ -30,7 +31,8 @@ modelClasses
 
 parseFiles
 	^(self new)
-		destDir: 'C:\Projekte\V6\SubSys\Messaging\ModelClasses\';
+		srcDir: 'C:\Projekte\git\st-qpid-proton-amqp-client\qpid-proton\0.10.1\includes\';
+		destDir: 'C:\Projekte\git\st-qpid-proton-amqp-client\OS\classes\qpid-proton\';
 		generate: {#error #messenger #message #types #codec}. 
 !"end parseFiles "
 
@@ -53,32 +55,32 @@ addHardcoded
 
 	^self.
 
-	content add: ((SimpleObject new)
+	content add: ((CObject new)
 		name: #pn_bytes_t;
 		type: #typedef;
 		subtype: #struct;
 		elements: ((OrderedCollection new)
-			add: ((SimpleObject new)
+			add: ((CObject new)
 				name: #size;
 				type: 'int';
 				yourself);
-			add: ((SimpleObject new)
+			add: ((CObject new)
 				name: #start;
 				type: 'char*';
 				yourself);
 			yourself);
 		yourself).
 		
-	content add: ((SimpleObject new)
+	content add: ((CObject new)
 		name: #pn_bytes;
 		type: #function;
 		subtype: #pn_bytes_t;
 		params: ((OrderedCollection new)
-			add: ((SimpleObject new)
+			add: ((CObject new)
 				name: #size;
 				type: 'size_t';
 				yourself);
-			add: ((SimpleObject new)
+			add: ((CObject new)
 				name: #start;
 				type: 'const char*';
 				yourself);
@@ -125,6 +127,28 @@ initModel
 !"end initModel "
 
 
+srcDir: aValue
+	srcDir := aValue.
+":Section Category
+accessing
+:End"
+!"end new method selector: "
+
+
+srcDir
+	^ srcDir.
+":Section Category
+accessing
+:End"
+!"end new method selector: "
+
+
+loadFilesAfterGen
+	^false.
+
+!"end loadFilesAfterGen "
+
+
 parseFunction: element
 
 	| i words func |
@@ -162,7 +186,7 @@ parseHeaderFile: headerFile
 	currentHeaderFile := headerFile asSymbol.
 	includes at: currentHeaderFile put: OrderedCollection new.
 	
-	stream := NewFileStream file: FileStream defaultPath + '\subsys\messaging\includes\' + headerFile + '.h'.
+	stream := NewFileStream file: self srcDir + headerFile + '.h'.
 	[
 		[stream atEnd] whileFalse: [
 			self parseLine: stream nextString.
@@ -182,7 +206,7 @@ parseLine: aString
 		state := #comment.
 		element ifNotNil: [content add: element. element := nil. ].
 		(aString trimBlanks indexOf: '/**') = 1 ifTrue: [
-			element := SimpleObject new.
+			element := CObject new.
 			element comment: StreamString new.
 		].
 		^self.
@@ -193,7 +217,7 @@ parseLine: aString
 		({#PN_EXTERN #typedef} includes: words first asSymbol) ifTrue: [
 			"Elemente Ohne Kommentar"
 			element ifNotNil: [content add: element. element := nil.].
-			element := SimpleObject new.
+			element := CObject new.
 			state := nil.
 		].
 	].
@@ -238,7 +262,7 @@ parseLine: aString
 			
 			(aString indexOf: #union) > 0 ifTrue: [
 				state := #struct_union.
-				element elements add: ((SimpleObject new)
+				element elements add: ((CObject new)
 					name: nil;
 					type: #union;
 					yourself).
@@ -282,7 +306,7 @@ parseLine: aString
 		
 		(aString indexOf: ';') > 0 ifTrue: [
 			state = #struct ifTrue: [
-				element elements add: (self parseTypeNameList: (words last copyTo: (words last indexOf: ';') - 1) trimBlanks).
+				"Ignore. Possibly a typedef struct without elements."
 			].
 			state := nil.
 		].
@@ -300,14 +324,13 @@ parseLine: aString
 	].
 	
 	
-
 !"end parseLine: "
 
 
 parseTypeNameList: aString
 	| words i el |
 	
-	el := SimpleObject new.
+	el := CObject new.
 	
 	aString trimBlanks = '...' ifTrue: [
 		el type: 'array'.
@@ -376,7 +399,7 @@ prepareEnum: each
 	| lines el result buffer counter |
 		
 	lines := each enumeration asOrderedCollection.
-	(lines first isKindOf: SimpleObject) ifTrue: [^self].
+	(lines first isKindOf: CObject) ifTrue: [^self].
 	
 	result := OrderedCollection new.
 	counter := 0.
@@ -404,7 +427,7 @@ prepareEnum: each
 				counter := counter + 1.
 			].
 			
-			el := SimpleObject new.
+			el := CObject new.
 			el name: name.
 			el value: value.
 		].
@@ -669,11 +692,12 @@ writeOS7Class: className prefix: prefixSymbol
 	
 	(out writeToFileName: (f := self destDir + className + '.cls') out) close.
 	out close.
-	
-	(f := f asFilename readStreamOnError: [ nil ]) notNil ifTrue: [
-		f fileInInit: true.
+
+	self loadFilesAfterGen ifTrue: [	
+		(f := f asFilename readStreamOnError: [ nil ]) notNil ifTrue: [
+			f fileInInit: true.
+		].
 	].
-	
 !"end writeOS7Class:prefix: "
 
 
@@ -787,10 +811,11 @@ writeOS7DLLClass
 	(out writeToFileName: (f := self destDir + 'QpidProtonDLL.cls') out) close.
 	out close.
 	
-	(f := f asFilename readStreamOnError: [ nil ]) notNil ifTrue: [
-		f fileInInit: true.
+	self loadFilesAfterGen ifTrue: [
+		(f := f asFilename readStreamOnError: [ nil ]) notNil ifTrue: [
+			f fileInInit: true.
+		].
 	].
-	
 !"end writeOS7DLLClass "
 
 
@@ -857,6 +882,7 @@ writeOS7Initialize: elements to: out7
 writeOS7Struct: el to: out7
 
 	el var ifNil: [^self].
+	(el elements isEmpty or: [el elements first = #'']) ifTrue: [^self].
 
 	out7 append: Tab + el var + ' := Structure new.'.
 	out7 append: CrLf.

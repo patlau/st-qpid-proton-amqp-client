@@ -1,0 +1,65 @@
+String SecondaryFile !
+
+
+! String class methods!
+
+
+!"End of class methods block"
+
+
+! String methods!
+
+
+asInitialcase
+
+	^self asLowerCase setFirstChar: #asUpperCase.
+
+!"end asInitialcase "
+
+
+isNilOrBlank
+	^self isBlank.
+!"end isNilOrBlank "
+
+matchAllRegularExpression: expression flags: flags
+"	Gibt alle Vorkommen von expression zurÅck. Die Indexe werden"
+"	so angepasst, dass sie fÅr copyFrom:to: verwendet werden kînnen"
+
+	| matches match str end |
+	matches := Array new.
+	flags := (flags asIdentitySet add: #regex) asArray.
+	end := 1.
+	match := self privateMatchExpression: expression flags: flags.
+	[match isNil not] whileTrue: [
+		match := match select: [:each | each isNil not].
+		matches add: ((match collect: [:each | each collect: [:each2 | each2+end-1]])
+			collect: [:each | each at: 2 put: (each last - 1)]).
+		
+		((end := end + match first last - 1) <= self size) ifTrue: [
+			(str := self copyFrom: end to: self size).
+			match := str privateMatchExpression: expression flags: flags.
+		] ifFalse: [
+			match := nil.
+		].
+	].
+	^matches.
+!"end matchAllRegularExpression:flags: "
+
+replaceAllExpression: aRegularExpression with: aPattern
+	^ self replaceExpression: aRegularExpression with: aPattern options: {#regex}
+			times: nil.
+!"end replaceAllExpression:with: "
+
+
+setFirstChar: mode
+| result |
+"	mode is either #asLowerCase or #asUpperCase (thanks greg)"
+	result := self asString copy.  "->>OS8 Compatibility"
+	result isEmpty ifTrue: [^result].
+	result at: 1 put: (mode sendTo: (result at: 1) args: nil).
+	self isSymbol ifTrue: [^result asSymbol].
+	^result.
+!"end setFirstChar: "
+
+
+!"End of methods block"
