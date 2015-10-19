@@ -8,6 +8,7 @@ instanceVariableNames: '
 '
 classVariableNames: '
 	instances
+	guidGenerator
 '
 poolDictionaries: '
 ' !
@@ -32,11 +33,25 @@ copyDLL
 !"end copyDLL "
 
 
+guidGenerator
+	^guidGenerator
+
+!"end guidGenerator "
+
+
+guidGenerator: anObject
+	guidGenerator := anObject.
+
+!"end guidGenerator: "
+
+
 initialize
 	instances := WeakIdentitySet new.
 	self copyDLL.
 	
-
+	System isInVW ifTrue:[
+		 self guidGenerator: [OS.GUIDSystemSupport new newGUIDString].
+	].
 !"end initialize "
 
 
@@ -49,6 +64,20 @@ new
 	
 	^obj.
 !"end new "
+
+
+newGUID
+	guidGenerator ifNotNil: [
+		^guidGenerator value.
+	].
+	
+	"Return pseudo GUID. You need to replace this with your own implementation"
+	^	(Integer newRandom asHexStringSize: 8) + '-' +
+		(Integer newRandom asHexStringSize: 4) + '-' +
+		(Integer newRandom asHexStringSize: 4) + '-' +
+		(Integer newRandom asHexStringSize: 4) + '-' +
+		(Integer newRandom asHexStringSize: 12).
+!"end newGUID "
 
 
 processNotifications
@@ -142,7 +171,7 @@ testPublishSubscribe
 		('SERVER: Publish') out.
 		conn send: ((AMQPMessage new)
 				subject: '*';
-				id: VE2000 nextFreeKey asString;
+				id: self newGUID asString;
 				durable: false;
 				bodySet: 'RES' ++ Timestamp now;
 				yourself).
@@ -180,7 +209,7 @@ testRPC
 		serverConn send: ((AMQPMessage new)
 			subject: '*';
 			replyTo: conn subscription address;
-			id: VE2000 nextFreeKey asString;
+			id: self newGUID asString;
 			durable: true;
 			bodySet: 'REQ' ++ Timestamp now;
 			yourself).
@@ -205,7 +234,7 @@ testRPC
 			('SERVER: Send Response to' ++ message replyTo) out.
 			clientConn send: ((AMQPMessage new)
 				subject: '*';
-				id: VE2000 nextFreeKey asString;
+				id: self newGUID asString;
 				durable: false;
 				bodySet: 'RES' ++ Timestamp now;
 				yourself).
@@ -282,7 +311,7 @@ log: traceSymbol key: keySymbol msg: msgStringOrSymbol
 receive
 	|  messages |
 	messages := self receive: self window.
-	^messages first.
+	^messages.
 !"end receive "
 
 
@@ -372,8 +401,7 @@ sendString: aString
 	message := AMQPMessage new.
 
 	message address: address.
-	message subject: 'TEST'.
-	message id: VE2000 nextFreeKey asString.
+	message id: self class newGUID asString.
 	message durable: true.
 
 	body := message body.

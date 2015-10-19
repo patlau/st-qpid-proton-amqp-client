@@ -12,10 +12,9 @@ poolDictionaries: '
 
 
 newCode: anInteger
-	| obj |
-	obj := self new.
-	obj varAt: #code put: anInteger.
-	^obj.
+	^self
+		newCode: anInteger
+		description: (QpidProton errorMessageForCode: anInteger).
 !"end newCode: "
 
 
@@ -46,9 +45,6 @@ code
 
 
 exString
-	exString ifNil: [
-		exString := QpidProton getErrorMessageForCode: code.
-	].
 	^exString.
 !"end exString "
 

@@ -68,7 +68,7 @@ config
 initialize
 	httpClient := self class newHttpClient.
 	httpClient addDependent: self.
-	config := SimpleObject new.
+	config := Dictionary new.
 	session := IdentityDictionary new.
 !"end initialize "
 
@@ -77,25 +77,20 @@ send: httpVerb request: aString path: urlPath
 
 	| headers reply result url cookie contentType |
 	
-	config url isNilOrBlank ifTrue: [
-		(VEError newCode: #VENoLicense) signal.
-	].
-	
-	(JobServerProtocol logSymbols includes: #'soap-msg') ifTrue: [
-		JobServerProtocol log: aString as: #'soap-msg'.
+	(url := self config at: #url) isNilOrBlank ifTrue: [
+		^self error: #NoURLConfigured.
 	].
 	
 	headers := Dictionary new.
 	headers at: 'Content-Type' put: 'application/json'.
 	
 	"httpClient authentication: 'Basic'."
-	headers at: 'Authorization' put: 'Basic ' + (HTTPClient encodeUser: config credentials key password: config credentials value).
+	headers at: 'Authorization' put: 'Basic ' + (HTTPClient encodeUser: (self config at: #credentials) key password: (self config at: #credentials) value).
 	session isNilOrEmpty ifFalse: [
 		headers at: 'Cookie' put: (HTTPCookie getRequestString: session values).
 	].
 	
 	"Construct URL from hostname (uri) and path"
-	url := config url.
 	(url last ~= $/ and: [urlPath first ~= $/]) ifTrue: [
 		url := url + '/'.
 	].
@@ -109,7 +104,7 @@ send: httpVerb request: aString path: urlPath
 		result := reply contentsAsStream contents asStringEncoding: #UTF8.
 	] ifFalse: [
 		(result := reply contentsAsStream contents asStringEncoding: #UTF8) isNilOrBlank ifTrue: [
-			(VEError newCode: #ERROR description: (self getLabelFor: #ERROR with: (Array with: (reply returnText)))) signal.
+			^self error: reply returnText.
 		].
 	].
 	
@@ -150,8 +145,8 @@ sendApi: httpVerb request: aString path: urlPath
 	| url |
 	
 	url := urlPath.
-	(url indexOf: self config api) = 0 ifTrue: [
-		url := config api + config version + url.
+	(url indexOf: (self config at: #api)) = 0 ifTrue: [
+		url := (self config at: #api) + (self config at: #version) + url.
 		url := url copyReplaceAll: '//' with: '/'.
 	].
 	

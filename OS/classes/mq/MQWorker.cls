@@ -13,6 +13,11 @@ poolDictionaries: '
 ! MQWorker class methods!
 
 
+logException: ex
+	^MQEventBus logException: ex.
+!"end logException: "
+
+
 new
 	^super new initialize.
 !"end new "
@@ -56,7 +61,7 @@ privateReceive
 			time := Timestamp now.
 		] on: Error do: [:ex |
 			"Do Qpid Error Handling"
-			VE2000 logException: ex out.
+			self class logException: ex out.
 			Thread currentThread attributeAt: #requestTerminate put: true.
 		].
 	] doWhile: [ connection notNil and: [(Thread currentThread attributeAt: #requestTerminate) ~= true] ].
@@ -81,7 +86,7 @@ privateSend
 			Thread currentThread description: #Send.
 			[
 				connection send: next.
-			] on: Error do: [:ex | VE2000 logException: ex out ].
+			] on: Error do: [:ex | self class logException: ex out ].
 		].
 		
 	] doWhile: [ connection notNil and: [(Thread currentThread attributeAt: #requestTerminate) ~= true] ].

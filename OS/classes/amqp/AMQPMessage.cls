@@ -73,7 +73,7 @@ bodySet: anObject
 	body := self body.
 
 	(anObject isKindOf: Dictionary) ifTrue: [
-		self contentType: 'application/json'. "Vendor specific: 'application/vnd+less.simple+json'"
+		self contentType: 'application/json'. "Vendor specific: 'application/vnd+xxx'"
 		body putString: (Json render: anObject) asString.
 	].
 	
@@ -113,13 +113,6 @@ id: anObject
 privateWrappedObject
 	^message.
 !"end privateWrappedObject "
-
-
-setID
-	self id: VE2000 nextFreeKey asString.
-
-!"end setID "
-
 
 
 !"End of methods block"

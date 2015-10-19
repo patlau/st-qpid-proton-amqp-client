@@ -1,0 +1,6 @@
+classes\ext\ApplicationDefinitionStream2f.ext
+classes\ext\String2f.ext
+_include classes\qpid-proton\QpidProton.txt
+_include classes\qpid-admin\QpidAdmin.txt
+_include classes\amqp\AMQP.txt
+_include classes\mq\MQ.txt

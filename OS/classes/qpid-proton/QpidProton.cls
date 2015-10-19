@@ -33,7 +33,7 @@ errorCodes
 
 
 errorMessageForCode: anInteger
-	^QpidProtonDLL pn_code: anInteger.
+	^QpidProtonLibrary pn_code: anInteger.
 !"end errorMessageForCode: "
 
 

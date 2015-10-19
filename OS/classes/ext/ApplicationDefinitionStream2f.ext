@@ -1,0 +1,129 @@
+ApplicationDefinitionStream SecondaryFile !
+
+
+!ApplicationDefinitionStream class methods!
+
+
+onFile: fName onError: aBlock
+	^self locateFile: fName onError: aBlock.
+!"end onFile:onError: "
+
+
+searchName: aFileOrApplicationName in: aDir
+	"Searchs for aFileOrApplicationName in different locations:"
+
+	| temp aFileName debug |
+
+	(debug := Debug ~~ nil) ifTrue: [
+		('*AutoStart>>searchName:' ++ aFileOrApplicationName asDelimitedString) out
+	].
+
+	"Do we have a Loadable Application ?"
+	(aFileName := LoadableApplications at: aFileOrApplicationName asSymbol) isNil ifTrue: [
+		aFileName := aFileOrApplicationName.
+	] ifFalse: [
+		"Yes, it's an Application!"		
+		"OS8: If not yet ported, it may be a block"
+		aFileName isBlockContext ifTrue: [
+			aFileName := aFileOrApplicationName.
+		] ifFalse: [
+			debug ifTrue: [
+				(
+					'  Application:' ++ aFileOrApplicationName asDelimitedString
+					++ 'has Filename:' ++ aFileName asDelimitedString
+				) out.
+			].
+		].
+	].
+
+	"For empty names is nothing to search !"
+	aFileName asString isBlank ifTrue: [
+		debug ifTrue: [('  FileReference is empty!') out].
+		temp := String new.
+	] ifFalse: [
+
+		"For absolute FilesReferences is nothing to search !"
+		(temp := aFileName) asFileNameString isRelativePathName not ifTrue: [
+			debug ifTrue: [('  FileReference is absolute:' ++ temp asDelimitedString) out].
+		] ifFalse: [
+
+			"Search in specified Dir"
+			(
+				aDir notNil and: [
+					File exists: (
+						temp := (aDir + DirSeparator + aFileName) asFileNameString fullFileName
+					)
+				]
+			) ifTrue: [
+				debug ifTrue: [('  Found in specified Dir:' ++ temp asDelimitedString) out].
+			] ifFalse: [
+
+				"Search in default Dir"
+				(
+					File exists: (
+						temp := aFileName asFileNameString fullFileName
+					)
+				) ifTrue: [
+					debug ifTrue: [('  Found in Default-Dir:' ++ temp asDelimitedString) out].
+				] ifFalse: [
+
+					"Search in specified Dir but in Executable Path"
+					(
+						aDir notNil and: [
+							File exists: (
+								temp := (ExecutablePath + DirSeparator + aDir + DirSeparator + aFileName) asFileNameString fullFileName
+							)
+						]
+					) ifTrue: [
+						debug ifTrue: [('  Found in ExecPath and specified Dir:' ++ temp asDelimitedString) out].
+					] ifFalse: [
+
+						"Search in Executable Dir"
+						(
+							File exists: (
+								temp := (ExecutablePath + DirSeparator + aFileName) asFileNameString fullFileName
+							)
+						) ifTrue: [
+							debug ifTrue: [('  Found in Executable-Dir:' ++ temp asDelimitedString) out].
+						] ifFalse: [
+
+							"We cant find the given name."
+							temp := aFileName.
+							debug ifTrue: [('  Name not found:' ++ temp asDelimitedString) out].
+						].
+					].
+				].
+			].
+		].
+	].
+	debug ifTrue: [('  vor Relativierung:' ++ temp asDelimitedString) out].
+
+	debug ifTrue: [
+		('  Evaluated Name:' ++ temp asDelimitedString) out.
+		('*End AutoStart>>searchName:') out.
+	].
+
+	^temp.
+!
+
+!"End of class methods block"
+
+
+!ApplicationDefinitionStream methods!
+
+privateLoadLine: line init: initBool
+		| fname stream |
+		fname := self searchName: line.
+		(stream := fname asFilename readStreamOnError: [ nil ]) notNil
+			ifTrue: [('loading' ++ fname) out.
+					^self fileIn: stream init: initBool ].
+	
+	^self error: ('File:' ++ line ++ 'was not found.' + CrLf + 'Application:' ++ self name) out.
+!
+
+
+searchName: aFileOrApplicationName
+	^self class searchName: aFileOrApplicationName in: self path.
+!
+
+!"End of methods block"

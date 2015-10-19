@@ -21,41 +21,55 @@ serverAddress
 ! AMQPConnectionTest methods!
 
 
-testSendReceive
+testDirect
+"
+	Qpid Broker Setup:
+	- Queue 'test' with no exchange binding 
+		(will be forwarded to default binding which is a direct binding with queue names as binding key)
 	
-	| address msgReceive msgSend thread threadResult |
+	This test will only run successfull if the Queue is empty!
+"	
+	| address msgReceive msgSend exReceive exSend thread threadResult |
 	
 	address := self class serverAddress + '/test'.
 	
 	thread := 
 		[	| conn msg |
-			conn := AMQPConnection new.
 			[
-				conn connect: address.
-				msg := conn sendString: 'AAA'.
-				msgSend := (SimpleObject new)
-					id: msg id;
-					message: msg body getString;
-					yourself.
-			] ensure: [
-				msg destroy.
-				conn disconnect.
+				conn := AMQPConnection new.
+				[
+					conn timeout: 5000.
+					conn connect: address.
+					msg := conn receive first.
+					msgReceive := (Dictionary new)
+						at: #id put: msg id;
+						at: #message put: msg body getString;
+						yourself.
+				] ensure: [
+					conn disconnect.
+				].
+			] on: Error do: [:ex | 
+				exReceive := ex out.
 			].
 		] fork.
 	
-	thread := 
-		[	| conn msg |
-			conn := AMQPConnection new.
+	thread waitUntilReady.
+	
+	[	| conn msg |
 			[
-				conn connect: address.
-				msg := conn receive.
-				msgReceive := (SimpleObject new)
-					id: msg id;
-					message: msg body getString;
-					yourself.
-			] ensure: [
-				msg destroy.
-				conn disconnect.
+				conn := AMQPConnection new.
+				[
+					conn connect: address.
+					msg := conn sendString: 'AAA'.
+					msgSend := (Dictionary new)
+						at: #id put: msg id;
+						at: #message put: msg body getString;
+						yourself.
+				] ensure: [
+					conn disconnect.
+				].
+			] on: Error do: [:ex | 
+				exSend := ex out.
 			].
 		] fork.
 	
@@ -66,16 +80,15 @@ testSendReceive
 		self assert: false description: threadResult.
 	].
 	
-	[
-		self assert: msgSend id equals: msgReceive id.
-		self assert: msgReceive message equals: 'AAA'.
-	] ensure: [
-		msgSend destroy.
-		msgReceive destroy.
-	].
+	self assert: exReceive isNil description: exReceive print.
+	
+	self assert: (msgSend at: #id) = (msgReceive at: #id)
+		description: 'ID does not match: ' + (msgSend at: #id) + '<>' + (msgReceive at: #id).
+	self assert: (msgSend at: #message) = (msgReceive at: #message)
+		description: 'Message does not match: ' + (msgSend at: #message) + '<>' + (msgReceive at: #message).
 	
 	
-!"end testSendReceive "
+!"end testDirect "
 
 
 !"End of methods block"

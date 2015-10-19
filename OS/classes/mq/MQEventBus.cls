@@ -5,6 +5,7 @@ instanceVariableNames: '
 '
 classVariableNames: '
 	global
+	logger
 '
 poolDictionaries: '
 ' !
@@ -19,17 +20,29 @@ current
 
 
 initialize
-	VE2000Auto when: #afterLogon send: #start to: self.
-	VE2000Auto when: #logoff send: #stop to: self.
 !"end initialize "
 
 
+logException: ex
+	(logger respondsTo: #logException:) ifTrue: [
+		^logger logException: ex.
+	].
+	ex out.
+
+!"end logException: "
+
+
+logger
+	^logger.
+!"end logger "
+
+
+logger: anObject
+	logger := anObject.
+!"end logger: "
+
+
 start
-	System isInVW ifTrue: [^self].
-	
-	"LPC zum Testen"
-	BatchJobSchedulerConfig current enableEB ifFalse: [^self].
-	
 	('MQEventBus>>start') out.
 	global ifNotNil: [^self].
 	global := self new.
@@ -40,7 +53,6 @@ start
 
 stop
 	('MQEventBus>>stop') out.
-	System isInVW ifTrue: [^self].
 	global ifNil: [^self].
 	global stop.
 	global := nil.
@@ -49,12 +61,9 @@ stop
 
 
 test
-MQEventBus start.
-
-MQEventBus current sendNotification: #TRANSCRIPT with: ((SimpleObject new) message: 'Test').
-
-MQEventBus stop.
-
+	MQEventBus start.
+	MQEventBus current sendNotification: #TRANSCRIPT with: ((Dictionary new) at: #message put: 'Test'; yourself).
+	MQEventBus stop.
 !"end test "
 
 
@@ -68,7 +77,7 @@ sendNotification: aSymbol with: anObject
 	sender queue nextPut: 
 		((AMQPMessage new)
 			subject: aSymbol;
-			id: VE2000 nextFreeKey asString;
+			id: AMQPConnection newGUID asString;
 			durable: false;
 			bodySet: anObject;
 			yourself).

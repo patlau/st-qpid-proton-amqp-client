@@ -2,7 +2,6 @@ QpidProtonDLL.cls
 QpidProton.cls
 QpidProtonData.cls
 QpidProtonError.cls
-QpidProtonGenerator.cls
 QpidProtonMessage.cls
 QpidProtonMessenger.cls
 QpidProtonSubscription.cls
