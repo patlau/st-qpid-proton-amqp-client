@@ -1,0 +1,4 @@
+_include qpid-proton\QpidProton.txt
+_include qpid-admin\QpidAdmin.txt
+_include amqp\AMQP.txt
+_include mq\MQ.txt

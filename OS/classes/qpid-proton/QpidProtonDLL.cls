@@ -104,7 +104,7 @@ initialize
 	self initializeMessage.
 	self initializeMessenger.
 	self initializeTypes.
-!"end pn_type_t "
+!"end initialize "
 
 
 initializeStructs
@@ -125,7 +125,7 @@ initializeStructs
 
 	struct_pn_bytes_t := Structure new.
 	variables := Array new: 2.
-	variables at: 1 put: VDWord new. "size_t"
+	variables at: 1 put: VDWord new "Uknown". "size_t"
 	variables at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
 	struct_pn_bytes_t addElements:
 		{#size #start}
@@ -175,7 +175,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_set_certificate'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN const char *pn_messenger_get_certificate(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -196,7 +196,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_set_private_key'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN const char *pn_messenger_get_private_key(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -217,7 +217,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_set_password'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN const char *pn_messenger_get_password(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -238,7 +238,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_set_trusted_certificates'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN const char *pn_messenger_get_trusted_certificates(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -253,13 +253,13 @@ initializeMessenger
 	"PN_EXTERN int pn_messenger_set_timeout(pn_messenger_t *messenger, int timeout);"
 	params := Array new: 2.
 	params at: 1 put: VDWord new "Pointer". "pn_messenger_t*"
-	params at: 2 put: VDWord new. "int"
+	params at: 2 put: VDWord new "Uknown". "int"
 
 	self
 		newProcedureNamed: #'pn_messenger_set_timeout'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_get_timeout(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -269,7 +269,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_get_timeout'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN bool pn_messenger_is_blocking(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -290,7 +290,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_set_blocking'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN bool pn_messenger_is_passive(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -311,7 +311,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_set_passive'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN void pn_messenger_free(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -331,7 +331,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_errno'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN pn_error_t *pn_messenger_error(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -351,18 +351,18 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_get_outgoing_window'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_set_outgoing_window(pn_messenger_t *messenger, int window);"
 	params := Array new: 2.
 	params at: 1 put: VDWord new "Pointer". "pn_messenger_t*"
-	params at: 2 put: VDWord new. "int"
+	params at: 2 put: VDWord new "Uknown". "int"
 
 	self
 		newProcedureNamed: #'pn_messenger_set_outgoing_window'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_get_incoming_window(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -372,18 +372,18 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_get_incoming_window'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_set_incoming_window(pn_messenger_t *messenger, int window);"
 	params := Array new: 2.
 	params at: 1 put: VDWord new "Pointer". "pn_messenger_t*"
-	params at: 2 put: VDWord new. "int"
+	params at: 2 put: VDWord new "Uknown". "int"
 
 	self
 		newProcedureNamed: #'pn_messenger_set_incoming_window'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_start(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -393,7 +393,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_start'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_stop(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -403,7 +403,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_stop'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN bool pn_messenger_stopped(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -490,7 +490,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_put'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN pn_status_t pn_messenger_status(pn_messenger_t *messenger, pn_tracker_t tracker);"
 	params := Array new: 2.
@@ -529,13 +529,13 @@ initializeMessenger
 	params := Array new: 3.
 	params at: 1 put: VDWord new "Pointer". "pn_messenger_t*"
 	params at: 2 put: VDWord new "Uknown". "pn_tracker_t"
-	params at: 3 put: VDWord new. "int"
+	params at: 3 put: VDWord new "Uknown". "int"
 
 	self
 		newProcedureNamed: #'pn_messenger_settle'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN pn_tracker_t pn_messenger_outgoing_tracker(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -550,13 +550,13 @@ initializeMessenger
 	"PN_EXTERN int pn_messenger_work(pn_messenger_t *messenger, int timeout);"
 	params := Array new: 2.
 	params at: 1 put: VDWord new "Pointer". "pn_messenger_t*"
-	params at: 2 put: VDWord new. "int"
+	params at: 2 put: VDWord new "Uknown". "int"
 
 	self
 		newProcedureNamed: #'pn_messenger_work'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_interrupt(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -566,29 +566,29 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_interrupt'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_send(pn_messenger_t *messenger, int n);"
 	params := Array new: 2.
 	params at: 1 put: VDWord new "Pointer". "pn_messenger_t*"
-	params at: 2 put: VDWord new. "int"
+	params at: 2 put: VDWord new "Uknown". "int"
 
 	self
 		newProcedureNamed: #'pn_messenger_send'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_recv(pn_messenger_t *messenger, int limit);"
 	params := Array new: 2.
 	params at: 1 put: VDWord new "Pointer". "pn_messenger_t*"
-	params at: 2 put: VDWord new. "int"
+	params at: 2 put: VDWord new "Uknown". "int"
 
 	self
 		newProcedureNamed: #'pn_messenger_recv'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_receiving(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -598,7 +598,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_receiving'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_get(pn_messenger_t *messenger, pn_message_t *message);"
 	params := Array new: 2.
@@ -609,7 +609,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_get'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN pn_tracker_t pn_messenger_incoming_tracker(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -635,25 +635,25 @@ initializeMessenger
 	params := Array new: 3.
 	params at: 1 put: VDWord new "Pointer". "pn_messenger_t*"
 	params at: 2 put: VDWord new "Uknown". "pn_tracker_t"
-	params at: 3 put: VDWord new. "int"
+	params at: 3 put: VDWord new "Uknown". "int"
 
 	self
 		newProcedureNamed: #'pn_messenger_accept'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_reject(pn_messenger_t *messenger, pn_tracker_t tracker, int flags);"
 	params := Array new: 3.
 	params at: 1 put: VDWord new "Pointer". "pn_messenger_t*"
 	params at: 2 put: VDWord new "Uknown". "pn_tracker_t"
-	params at: 3 put: VDWord new. "int"
+	params at: 3 put: VDWord new "Uknown". "int"
 
 	self
 		newProcedureNamed: #'pn_messenger_reject'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN pn_link_t *pn_messenger_tracker_link(pn_messenger_t *messenger, pn_tracker_t tracker);"
 	params := Array new: 2.
@@ -674,7 +674,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_outgoing'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_incoming(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -684,7 +684,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_incoming'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_route(pn_messenger_t *messenger, const char *pattern, const char *address);"
 	params := Array new: 3.
@@ -696,7 +696,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_route'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_rewrite(pn_messenger_t *messenger, const char *pattern, const char *address);"
 	params := Array new: 3.
@@ -708,7 +708,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_rewrite'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN pn_selectable_t *pn_messenger_selectable(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -739,7 +739,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_set_flags'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_get_flags(pn_messenger_t *messenger);"
 	params := Array new: 1.
@@ -749,7 +749,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_get_flags'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_set_snd_settle_mode(pn_messenger_t *messenger, const pn_snd_settle_mode_t mode);"
 	params := Array new: 2.
@@ -760,7 +760,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_set_snd_settle_mode'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_messenger_set_rcv_settle_mode(pn_messenger_t *messenger, const pn_rcv_settle_mode_t mode);"
 	params := Array new: 2.
@@ -771,7 +771,7 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_set_rcv_settle_mode'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN void pn_messenger_set_tracer(pn_messenger_t *messenger, pn_tracer_t tracer);"
 	params := Array new: 2.
@@ -804,10 +804,818 @@ initializeMessenger
 		newProcedureNamed: #'pn_messenger_set_ssl_peer_authentication_mode'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 
 !"end initializeMessenger "
+
+
+initializeMessage
+	| variables params |
+
+	"PN_EXTERN pn_message_t * pn_message(void);"
+	params := Array new: 0.
+
+	self
+		newProcedureNamed: #'pn_message'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Pointer").
+
+	"PN_EXTERN void           pn_message_free(pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_free'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN void           pn_message_clear(pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_clear'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int            pn_message_errno(pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_errno'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN pn_error_t    *pn_message_error(pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_error'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Pointer").
+
+	"PN_EXTERN bool           pn_message_is_inferred(pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_is_inferred'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VBoolean new).
+
+	"PN_EXTERN int            pn_message_set_inferred(pn_message_t *msg, bool inferred);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VBoolean new. "bool"
+
+	self
+		newProcedureNamed: #'pn_message_set_inferred'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN bool           pn_message_is_durable            (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_is_durable'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VBoolean new).
+
+	"PN_EXTERN int            pn_message_set_durable           (pn_message_t *msg, bool durable);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VBoolean new. "bool"
+
+	self
+		newProcedureNamed: #'pn_message_set_durable'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN uint8_t        pn_message_get_priority          (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_priority'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int            pn_message_set_priority          (pn_message_t *msg, uint8_t priority);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VDWord new "Uknown". "uint8_t"
+
+	self
+		newProcedureNamed: #'pn_message_set_priority'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN pn_millis_t    pn_message_get_ttl               (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_ttl'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int            pn_message_set_ttl               (pn_message_t *msg, pn_millis_t ttl);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VDWord new "Uknown". "pn_millis_t"
+
+	self
+		newProcedureNamed: #'pn_message_set_ttl'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN bool           pn_message_is_first_acquirer     (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_is_first_acquirer'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VBoolean new).
+
+	"PN_EXTERN int            pn_message_set_first_acquirer    (pn_message_t *msg, bool first);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VBoolean new. "bool"
+
+	self
+		newProcedureNamed: #'pn_message_set_first_acquirer'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN uint32_t       pn_message_get_delivery_count    (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_delivery_count'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int            pn_message_set_delivery_count    (pn_message_t *msg, uint32_t count);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VDWord new "Uknown". "uint32_t"
+
+	self
+		newProcedureNamed: #'pn_message_set_delivery_count'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN pn_data_t *    pn_message_id                    (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_id'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Pointer").
+
+	"PN_EXTERN pn_atom_t      pn_message_get_id                (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_id'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (((VStructure structObj: struct_pn_atom_t) passedBy: #value)).
+
+	"PN_EXTERN int            pn_message_set_id                (pn_message_t *msg, pn_atom_t id);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: ((VStructure structObj: struct_pn_atom_t) passedBy: #value). "pn_atom_t"
+
+	self
+		newProcedureNamed: #'pn_message_set_id'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN pn_bytes_t     pn_message_get_user_id           (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_user_id'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (((VStructure structObj: struct_pn_bytes_t) passedBy: #value)).
+
+	"PN_EXTERN int            pn_message_set_user_id           (pn_message_t *msg, pn_bytes_t user_id);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: ((VStructure structObj: struct_pn_bytes_t) passedBy: #value). "pn_bytes_t"
+
+	self
+		newProcedureNamed: #'pn_message_set_user_id'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN const char *   pn_message_get_address           (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_address'
+		paramVars: params	
+		callingConvention: #C 
+		returns: ((VString "concreteClass" passedBy: #reference)).
+
+	"PN_EXTERN int            pn_message_set_address           (pn_message_t *msg, const char *address);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+
+	self
+		newProcedureNamed: #'pn_message_set_address'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN const char *   pn_message_get_subject           (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_subject'
+		paramVars: params	
+		callingConvention: #C 
+		returns: ((VString "concreteClass" passedBy: #reference)).
+
+	"PN_EXTERN int            pn_message_set_subject           (pn_message_t *msg, const char *subject);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+
+	self
+		newProcedureNamed: #'pn_message_set_subject'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN const char *   pn_message_get_reply_to          (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_reply_to'
+		paramVars: params	
+		callingConvention: #C 
+		returns: ((VString "concreteClass" passedBy: #reference)).
+
+	"PN_EXTERN int            pn_message_set_reply_to          (pn_message_t *msg, const char *reply_to);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+
+	self
+		newProcedureNamed: #'pn_message_set_reply_to'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN pn_data_t *    pn_message_correlation_id        (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_correlation_id'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Pointer").
+
+	"PN_EXTERN pn_atom_t      pn_message_get_correlation_id    (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_correlation_id'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (((VStructure structObj: struct_pn_atom_t) passedBy: #value)).
+
+	"PN_EXTERN int            pn_message_set_correlation_id    (pn_message_t *msg, pn_atom_t id);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: ((VStructure structObj: struct_pn_atom_t) passedBy: #value). "pn_atom_t"
+
+	self
+		newProcedureNamed: #'pn_message_set_correlation_id'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN const char *   pn_message_get_content_type      (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_content_type'
+		paramVars: params	
+		callingConvention: #C 
+		returns: ((VString "concreteClass" passedBy: #reference)).
+
+	"PN_EXTERN int            pn_message_set_content_type      (pn_message_t *msg, const char *type);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+
+	self
+		newProcedureNamed: #'pn_message_set_content_type'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN const char *   pn_message_get_content_encoding  (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_content_encoding'
+		paramVars: params	
+		callingConvention: #C 
+		returns: ((VString "concreteClass" passedBy: #reference)).
+
+	"PN_EXTERN int            pn_message_set_content_encoding  (pn_message_t *msg, const char *encoding);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+
+	self
+		newProcedureNamed: #'pn_message_set_content_encoding'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN pn_timestamp_t pn_message_get_expiry_time       (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_expiry_time'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int            pn_message_set_expiry_time       (pn_message_t *msg, pn_timestamp_t time);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VDWord new "Uknown". "pn_timestamp_t"
+
+	self
+		newProcedureNamed: #'pn_message_set_expiry_time'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN pn_timestamp_t pn_message_get_creation_time     (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_creation_time'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int            pn_message_set_creation_time     (pn_message_t *msg, pn_timestamp_t time);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VDWord new "Uknown". "pn_timestamp_t"
+
+	self
+		newProcedureNamed: #'pn_message_set_creation_time'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN const char *   pn_message_get_group_id          (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_group_id'
+		paramVars: params	
+		callingConvention: #C 
+		returns: ((VString "concreteClass" passedBy: #reference)).
+
+	"PN_EXTERN int            pn_message_set_group_id          (pn_message_t *msg, const char *group_id);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+
+	self
+		newProcedureNamed: #'pn_message_set_group_id'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN pn_sequence_t  pn_message_get_group_sequence    (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_group_sequence'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int            pn_message_set_group_sequence    (pn_message_t *msg, pn_sequence_t n);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VDWord new "Uknown". "pn_sequence_t"
+
+	self
+		newProcedureNamed: #'pn_message_set_group_sequence'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN const char *   pn_message_get_reply_to_group_id (pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_reply_to_group_id'
+		paramVars: params	
+		callingConvention: #C 
+		returns: ((VString "concreteClass" passedBy: #reference)).
+
+	"PN_EXTERN int            pn_message_set_reply_to_group_id (pn_message_t *msg, const char *reply_to_group_id);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+
+	self
+		newProcedureNamed: #'pn_message_set_reply_to_group_id'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN pn_format_t pn_message_get_format(pn_message_t *message);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_get_format'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_message_set_format(pn_message_t *message, pn_format_t format);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VDWord new "Uknown". "pn_format_t"
+
+	self
+		newProcedureNamed: #'pn_message_set_format'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_message_load(pn_message_t *message, const char *data, size_t size);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+	params at: 3 put: VDWord new "Uknown". "size_t"
+
+	self
+		newProcedureNamed: #'pn_message_load'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_message_load_data(pn_message_t *message, const char *data, size_t size);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+	params at: 3 put: VDWord new "Uknown". "size_t"
+
+	self
+		newProcedureNamed: #'pn_message_load_data'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_message_load_text(pn_message_t *message, const char *data, size_t size);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+	params at: 3 put: VDWord new "Uknown". "size_t"
+
+	self
+		newProcedureNamed: #'pn_message_load_text'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_message_load_amqp(pn_message_t *message, const char *data, size_t size);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+	params at: 3 put: VDWord new "Uknown". "size_t"
+
+	self
+		newProcedureNamed: #'pn_message_load_amqp'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_message_load_json(pn_message_t *message, const char *data, size_t size);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+	params at: 3 put: VDWord new "Uknown". "size_t"
+
+	self
+		newProcedureNamed: #'pn_message_load_json'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_message_save(pn_message_t *message, char *data, size_t *size);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VDWord new "String by reference". "char*"
+	params at: 3 put: VDWord new "Pointer". "size_t*"
+
+	self
+		newProcedureNamed: #'pn_message_save'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_message_save_data(pn_message_t *message, char *data, size_t *size);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VDWord new "String by reference". "char*"
+	params at: 3 put: VDWord new "Pointer". "size_t*"
+
+	self
+		newProcedureNamed: #'pn_message_save_data'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_message_save_text(pn_message_t *message, char *data, size_t *size);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VDWord new "String by reference". "char*"
+	params at: 3 put: VDWord new "Pointer". "size_t*"
+
+	self
+		newProcedureNamed: #'pn_message_save_text'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_message_save_amqp(pn_message_t *message, char *data, size_t *size);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VDWord new "String by reference". "char*"
+	params at: 3 put: VDWord new "Pointer". "size_t*"
+
+	self
+		newProcedureNamed: #'pn_message_save_amqp'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_message_save_json(pn_message_t *message, char *data, size_t *size);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VDWord new "String by reference". "char*"
+	params at: 3 put: VDWord new "Pointer". "size_t*"
+
+	self
+		newProcedureNamed: #'pn_message_save_json'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN pn_data_t *pn_message_instructions(pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_instructions'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Pointer").
+
+	"PN_EXTERN pn_data_t *pn_message_annotations(pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_annotations'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Pointer").
+
+	"PN_EXTERN pn_data_t *pn_message_properties(pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_properties'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Pointer").
+
+	"PN_EXTERN pn_data_t *pn_message_body(pn_message_t *msg);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+
+	self
+		newProcedureNamed: #'pn_message_body'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Pointer").
+
+	"PN_EXTERN int pn_message_decode(pn_message_t *msg, const char *bytes, size_t size);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
+	params at: 3 put: VDWord new "Uknown". "size_t"
+
+	self
+		newProcedureNamed: #'pn_message_decode'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_message_encode(pn_message_t *msg, char *bytes, size_t *size);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
+	params at: 2 put: VDWord new "String by reference". "char*"
+	params at: 3 put: VDWord new "Pointer". "size_t*"
+
+	self
+		newProcedureNamed: #'pn_message_encode'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN ssize_t pn_message_data(char *dst, size_t available, const char *src, size_t size);"
+	params := Array new: 4.
+	params at: 1 put: VDWord new "String by reference". "char*"
+	params at: 2 put: VDWord new "Uknown". "size_t"
+	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
+	params at: 4 put: VDWord new "Uknown". "size_t"
+
+	self
+		newProcedureNamed: #'pn_message_data'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+
+!"end initializeMessage "
+
+
+initializeError
+	| variables params |
+
+	"PN_EXTERN const char *pn_code(int code);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Uknown". "int"
+
+	self
+		newProcedureNamed: #'pn_code'
+		paramVars: params	
+		callingConvention: #C 
+		returns: ((VString "concreteClass" passedBy: #reference)).
+
+	"PN_EXTERN pn_error_t *pn_error(void);"
+	params := Array new: 0.
+
+	self
+		newProcedureNamed: #'pn_error'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Pointer").
+
+	"PN_EXTERN void pn_error_free(pn_error_t *error);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+
+	self
+		newProcedureNamed: #'pn_error_free'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN void pn_error_clear(pn_error_t *error);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+
+	self
+		newProcedureNamed: #'pn_error_clear'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_error_set(pn_error_t *error, int code, const char *text);"
+	params := Array new: 3.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+	params at: 2 put: VDWord new "Uknown". "int"
+	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
+
+	self
+		newProcedureNamed: #'pn_error_set'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_error_vformat(pn_error_t *error, int code, const char *fmt, va_list ap);"
+	params := Array new: 4.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+	params at: 2 put: VDWord new "Uknown". "int"
+	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
+	params at: 4 put: VDWord new "Uknown". "va_list"
+
+	self
+		newProcedureNamed: #'pn_error_vformat'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_error_format(pn_error_t *error, int code, const char *fmt, ...);"
+	params := Array new: 4.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+	params at: 2 put: VDWord new "Uknown". "int"
+	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
+	params at: 4 put: VDWord new "Uknown". "array"
+
+	self
+		newProcedureNamed: #'pn_error_format'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN int pn_error_code(pn_error_t *error);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+
+	self
+		newProcedureNamed: #'pn_error_code'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+	"PN_EXTERN const char *pn_error_text(pn_error_t *error);"
+	params := Array new: 1.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+
+	self
+		newProcedureNamed: #'pn_error_text'
+		paramVars: params	
+		callingConvention: #C 
+		returns: ((VString "concreteClass" passedBy: #reference)).
+
+	"PN_EXTERN int pn_error_copy(pn_error_t *error, pn_error_t *src);"
+	params := Array new: 2.
+	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
+	params at: 2 put: VDWord new "Pointer". "pn_error_t*"
+
+	self
+		newProcedureNamed: #'pn_error_copy'
+		paramVars: params	
+		callingConvention: #C 
+		returns: (VDWord new "Uknown").
+
+
+!"end initializeError "
 
 
 initializeTypes
@@ -815,7 +1623,7 @@ initializeTypes
 
 	"PN_EXTERN pn_bytes_t pn_bytes(size_t size, const char *start);"
 	params := Array new: 2.
-	params at: 1 put: VDWord new. "size_t"
+	params at: 1 put: VDWord new "Uknown". "size_t"
 	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
 
 	self
@@ -843,7 +1651,7 @@ initializeCodec
 
 	"PN_EXTERN pn_data_t *pn_data(size_t capacity);"
 	params := Array new: 1.
-	params at: 1 put: VDWord new. "size_t"
+	params at: 1 put: VDWord new "Uknown". "size_t"
 
 	self
 		newProcedureNamed: #'pn_data'
@@ -869,7 +1677,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_errno'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN pn_error_t *pn_data_error(pn_data_t *data);"
 	params := Array new: 1.
@@ -891,7 +1699,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_vfill'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_fill(pn_data_t *data, const char *fmt, ...);"
 	params := Array new: 3.
@@ -903,7 +1711,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_fill'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_vscan(pn_data_t *data, const char *fmt, va_list ap);"
 	params := Array new: 3.
@@ -915,7 +1723,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_vscan'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_scan(pn_data_t *data, const char *fmt, ...);"
 	params := Array new: 3.
@@ -927,7 +1735,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_scan'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN void pn_data_clear(pn_data_t *data);"
 	params := Array new: 1.
@@ -947,7 +1755,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_size'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN void pn_data_rewind(pn_data_t *data);"
 	params := Array new: 1.
@@ -1028,7 +1836,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_print'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_format(pn_data_t *data, char *bytes, size_t *size);"
 	params := Array new: 3.
@@ -1040,13 +1848,13 @@ initializeCodec
 		newProcedureNamed: #'pn_data_format'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN ssize_t pn_data_encode(pn_data_t *data, char *bytes, size_t size);"
 	params := Array new: 3.
 	params at: 1 put: VDWord new "Pointer". "pn_data_t*"
 	params at: 2 put: VDWord new "String by reference". "char*"
-	params at: 3 put: VDWord new. "size_t"
+	params at: 3 put: VDWord new "Uknown". "size_t"
 
 	self
 		newProcedureNamed: #'pn_data_encode'
@@ -1058,7 +1866,7 @@ initializeCodec
 	params := Array new: 3.
 	params at: 1 put: VDWord new "Pointer". "pn_data_t*"
 	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-	params at: 3 put: VDWord new. "size_t"
+	params at: 3 put: VDWord new "Uknown". "size_t"
 
 	self
 		newProcedureNamed: #'pn_data_decode'
@@ -1074,7 +1882,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_list'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_map(pn_data_t *data);"
 	params := Array new: 1.
@@ -1084,7 +1892,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_map'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_array(pn_data_t *data, bool described, pn_type_t type);"
 	params := Array new: 3.
@@ -1096,7 +1904,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_array'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_described(pn_data_t *data);"
 	params := Array new: 1.
@@ -1106,7 +1914,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_described'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_null(pn_data_t *data);"
 	params := Array new: 1.
@@ -1116,7 +1924,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_null'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_bool(pn_data_t *data, bool b);"
 	params := Array new: 2.
@@ -1127,7 +1935,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_bool'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_ubyte(pn_data_t *data, uint8_t ub);"
 	params := Array new: 2.
@@ -1138,7 +1946,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_ubyte'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_byte(pn_data_t *data, int8_t b);"
 	params := Array new: 2.
@@ -1149,7 +1957,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_byte'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_ushort(pn_data_t *data, uint16_t us);"
 	params := Array new: 2.
@@ -1160,7 +1968,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_ushort'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_short(pn_data_t *data, int16_t s);"
 	params := Array new: 2.
@@ -1171,7 +1979,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_short'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_uint(pn_data_t *data, uint32_t ui);"
 	params := Array new: 2.
@@ -1182,7 +1990,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_uint'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_int(pn_data_t *data, int32_t i);"
 	params := Array new: 2.
@@ -1193,7 +2001,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_int'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_char(pn_data_t *data, pn_char_t c);"
 	params := Array new: 2.
@@ -1204,7 +2012,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_char'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_ulong(pn_data_t *data, uint64_t ul);"
 	params := Array new: 2.
@@ -1215,7 +2023,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_ulong'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_long(pn_data_t *data, int64_t l);"
 	params := Array new: 2.
@@ -1226,7 +2034,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_long'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_timestamp(pn_data_t *data, pn_timestamp_t t);"
 	params := Array new: 2.
@@ -1237,7 +2045,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_timestamp'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_float(pn_data_t *data, float f);"
 	params := Array new: 2.
@@ -1248,7 +2056,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_float'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_double(pn_data_t *data, double d);"
 	params := Array new: 2.
@@ -1259,7 +2067,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_double'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_decimal32(pn_data_t *data, pn_decimal32_t d);"
 	params := Array new: 2.
@@ -1270,7 +2078,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_decimal32'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_decimal64(pn_data_t *data, pn_decimal64_t d);"
 	params := Array new: 2.
@@ -1281,7 +2089,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_decimal64'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_decimal128(pn_data_t *data, pn_decimal128_t d);"
 	params := Array new: 2.
@@ -1292,7 +2100,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_decimal128'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_uuid(pn_data_t *data, pn_uuid_t u);"
 	params := Array new: 2.
@@ -1303,7 +2111,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_uuid'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_binary(pn_data_t *data, pn_bytes_t bytes);"
 	params := Array new: 2.
@@ -1314,7 +2122,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_binary'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_string(pn_data_t *data, pn_bytes_t string);"
 	params := Array new: 2.
@@ -1325,7 +2133,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_string'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_symbol(pn_data_t *data, pn_bytes_t symbol);"
 	params := Array new: 2.
@@ -1336,7 +2144,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_symbol'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_put_atom(pn_data_t *data, pn_atom_t atom);"
 	params := Array new: 2.
@@ -1347,7 +2155,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_put_atom'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN size_t pn_data_get_list(pn_data_t *data);"
 	params := Array new: 1.
@@ -1357,7 +2165,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_get_list'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN size_t pn_data_get_map(pn_data_t *data);"
 	params := Array new: 1.
@@ -1367,7 +2175,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_get_map'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN size_t pn_data_get_array(pn_data_t *data);"
 	params := Array new: 1.
@@ -1377,7 +2185,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_get_array'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN bool pn_data_is_array_described(pn_data_t *data);"
 	params := Array new: 1.
@@ -1648,7 +2456,7 @@ initializeCodec
 		newProcedureNamed: #'pn_data_copy'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_append(pn_data_t *data, pn_data_t *src);"
 	params := Array new: 2.
@@ -1659,19 +2467,19 @@ initializeCodec
 		newProcedureNamed: #'pn_data_append'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN int pn_data_appendn(pn_data_t *data, pn_data_t *src, int limit);"
 	params := Array new: 3.
 	params at: 1 put: VDWord new "Pointer". "pn_data_t*"
 	params at: 2 put: VDWord new "Pointer". "pn_data_t*"
-	params at: 3 put: VDWord new. "int"
+	params at: 3 put: VDWord new "Uknown". "int"
 
 	self
 		newProcedureNamed: #'pn_data_appendn'
 		paramVars: params	
 		callingConvention: #C 
-		returns: (VDWord new).
+		returns: (VDWord new "Uknown").
 
 	"PN_EXTERN void pn_data_narrow(pn_data_t *data);"
 	params := Array new: 1.
@@ -1726,814 +2534,6 @@ initializeCodec
 
 
 !"end initializeCodec "
-
-
-initializeMessage
-	| variables params |
-
-	"PN_EXTERN pn_message_t * pn_message(void);"
-	params := Array new: 0.
-
-	self
-		newProcedureNamed: #'pn_message'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Pointer").
-
-	"PN_EXTERN void           pn_message_free(pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_free'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-	"PN_EXTERN void           pn_message_clear(pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_clear'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-	"PN_EXTERN int            pn_message_errno(pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_errno'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN pn_error_t    *pn_message_error(pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_error'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Pointer").
-
-	"PN_EXTERN bool           pn_message_is_inferred(pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_is_inferred'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VBoolean new).
-
-	"PN_EXTERN int            pn_message_set_inferred(pn_message_t *msg, bool inferred);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VBoolean new. "bool"
-
-	self
-		newProcedureNamed: #'pn_message_set_inferred'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN bool           pn_message_is_durable            (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_is_durable'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VBoolean new).
-
-	"PN_EXTERN int            pn_message_set_durable           (pn_message_t *msg, bool durable);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VBoolean new. "bool"
-
-	self
-		newProcedureNamed: #'pn_message_set_durable'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN uint8_t        pn_message_get_priority          (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_priority'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-	"PN_EXTERN int            pn_message_set_priority          (pn_message_t *msg, uint8_t priority);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VDWord new "Uknown". "uint8_t"
-
-	self
-		newProcedureNamed: #'pn_message_set_priority'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN pn_millis_t    pn_message_get_ttl               (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_ttl'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-	"PN_EXTERN int            pn_message_set_ttl               (pn_message_t *msg, pn_millis_t ttl);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VDWord new "Uknown". "pn_millis_t"
-
-	self
-		newProcedureNamed: #'pn_message_set_ttl'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN bool           pn_message_is_first_acquirer     (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_is_first_acquirer'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VBoolean new).
-
-	"PN_EXTERN int            pn_message_set_first_acquirer    (pn_message_t *msg, bool first);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VBoolean new. "bool"
-
-	self
-		newProcedureNamed: #'pn_message_set_first_acquirer'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN uint32_t       pn_message_get_delivery_count    (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_delivery_count'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-	"PN_EXTERN int            pn_message_set_delivery_count    (pn_message_t *msg, uint32_t count);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VDWord new "Uknown". "uint32_t"
-
-	self
-		newProcedureNamed: #'pn_message_set_delivery_count'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN pn_data_t *    pn_message_id                    (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_id'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Pointer").
-
-	"PN_EXTERN pn_atom_t      pn_message_get_id                (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_id'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (((VStructure structObj: struct_pn_atom_t) passedBy: #value)).
-
-	"PN_EXTERN int            pn_message_set_id                (pn_message_t *msg, pn_atom_t id);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: ((VStructure structObj: struct_pn_atom_t) passedBy: #value). "pn_atom_t"
-
-	self
-		newProcedureNamed: #'pn_message_set_id'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN pn_bytes_t     pn_message_get_user_id           (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_user_id'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (((VStructure structObj: struct_pn_bytes_t) passedBy: #value)).
-
-	"PN_EXTERN int            pn_message_set_user_id           (pn_message_t *msg, pn_bytes_t user_id);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: ((VStructure structObj: struct_pn_bytes_t) passedBy: #value). "pn_bytes_t"
-
-	self
-		newProcedureNamed: #'pn_message_set_user_id'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN const char *   pn_message_get_address           (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_address'
-		paramVars: params	
-		callingConvention: #C 
-		returns: ((VString "concreteClass" passedBy: #reference)).
-
-	"PN_EXTERN int            pn_message_set_address           (pn_message_t *msg, const char *address);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-
-	self
-		newProcedureNamed: #'pn_message_set_address'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN const char *   pn_message_get_subject           (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_subject'
-		paramVars: params	
-		callingConvention: #C 
-		returns: ((VString "concreteClass" passedBy: #reference)).
-
-	"PN_EXTERN int            pn_message_set_subject           (pn_message_t *msg, const char *subject);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-
-	self
-		newProcedureNamed: #'pn_message_set_subject'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN const char *   pn_message_get_reply_to          (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_reply_to'
-		paramVars: params	
-		callingConvention: #C 
-		returns: ((VString "concreteClass" passedBy: #reference)).
-
-	"PN_EXTERN int            pn_message_set_reply_to          (pn_message_t *msg, const char *reply_to);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-
-	self
-		newProcedureNamed: #'pn_message_set_reply_to'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN pn_data_t *    pn_message_correlation_id        (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_correlation_id'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Pointer").
-
-	"PN_EXTERN pn_atom_t      pn_message_get_correlation_id    (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_correlation_id'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (((VStructure structObj: struct_pn_atom_t) passedBy: #value)).
-
-	"PN_EXTERN int            pn_message_set_correlation_id    (pn_message_t *msg, pn_atom_t id);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: ((VStructure structObj: struct_pn_atom_t) passedBy: #value). "pn_atom_t"
-
-	self
-		newProcedureNamed: #'pn_message_set_correlation_id'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN const char *   pn_message_get_content_type      (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_content_type'
-		paramVars: params	
-		callingConvention: #C 
-		returns: ((VString "concreteClass" passedBy: #reference)).
-
-	"PN_EXTERN int            pn_message_set_content_type      (pn_message_t *msg, const char *type);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-
-	self
-		newProcedureNamed: #'pn_message_set_content_type'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN const char *   pn_message_get_content_encoding  (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_content_encoding'
-		paramVars: params	
-		callingConvention: #C 
-		returns: ((VString "concreteClass" passedBy: #reference)).
-
-	"PN_EXTERN int            pn_message_set_content_encoding  (pn_message_t *msg, const char *encoding);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-
-	self
-		newProcedureNamed: #'pn_message_set_content_encoding'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN pn_timestamp_t pn_message_get_expiry_time       (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_expiry_time'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-	"PN_EXTERN int            pn_message_set_expiry_time       (pn_message_t *msg, pn_timestamp_t time);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VDWord new "Uknown". "pn_timestamp_t"
-
-	self
-		newProcedureNamed: #'pn_message_set_expiry_time'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN pn_timestamp_t pn_message_get_creation_time     (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_creation_time'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-	"PN_EXTERN int            pn_message_set_creation_time     (pn_message_t *msg, pn_timestamp_t time);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VDWord new "Uknown". "pn_timestamp_t"
-
-	self
-		newProcedureNamed: #'pn_message_set_creation_time'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN const char *   pn_message_get_group_id          (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_group_id'
-		paramVars: params	
-		callingConvention: #C 
-		returns: ((VString "concreteClass" passedBy: #reference)).
-
-	"PN_EXTERN int            pn_message_set_group_id          (pn_message_t *msg, const char *group_id);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-
-	self
-		newProcedureNamed: #'pn_message_set_group_id'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN pn_sequence_t  pn_message_get_group_sequence    (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_group_sequence'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-	"PN_EXTERN int            pn_message_set_group_sequence    (pn_message_t *msg, pn_sequence_t n);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VDWord new "Uknown". "pn_sequence_t"
-
-	self
-		newProcedureNamed: #'pn_message_set_group_sequence'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN const char *   pn_message_get_reply_to_group_id (pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_reply_to_group_id'
-		paramVars: params	
-		callingConvention: #C 
-		returns: ((VString "concreteClass" passedBy: #reference)).
-
-	"PN_EXTERN int            pn_message_set_reply_to_group_id (pn_message_t *msg, const char *reply_to_group_id);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-
-	self
-		newProcedureNamed: #'pn_message_set_reply_to_group_id'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN pn_format_t pn_message_get_format(pn_message_t *message);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_get_format'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-	"PN_EXTERN int pn_message_set_format(pn_message_t *message, pn_format_t format);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VDWord new "Uknown". "pn_format_t"
-
-	self
-		newProcedureNamed: #'pn_message_set_format'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_message_load(pn_message_t *message, const char *data, size_t size);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-	params at: 3 put: VDWord new. "size_t"
-
-	self
-		newProcedureNamed: #'pn_message_load'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_message_load_data(pn_message_t *message, const char *data, size_t size);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-	params at: 3 put: VDWord new. "size_t"
-
-	self
-		newProcedureNamed: #'pn_message_load_data'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_message_load_text(pn_message_t *message, const char *data, size_t size);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-	params at: 3 put: VDWord new. "size_t"
-
-	self
-		newProcedureNamed: #'pn_message_load_text'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_message_load_amqp(pn_message_t *message, const char *data, size_t size);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-	params at: 3 put: VDWord new. "size_t"
-
-	self
-		newProcedureNamed: #'pn_message_load_amqp'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_message_load_json(pn_message_t *message, const char *data, size_t size);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-	params at: 3 put: VDWord new. "size_t"
-
-	self
-		newProcedureNamed: #'pn_message_load_json'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_message_save(pn_message_t *message, char *data, size_t *size);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VDWord new "String by reference". "char*"
-	params at: 3 put: VDWord new "Pointer". "size_t*"
-
-	self
-		newProcedureNamed: #'pn_message_save'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_message_save_data(pn_message_t *message, char *data, size_t *size);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VDWord new "String by reference". "char*"
-	params at: 3 put: VDWord new "Pointer". "size_t*"
-
-	self
-		newProcedureNamed: #'pn_message_save_data'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_message_save_text(pn_message_t *message, char *data, size_t *size);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VDWord new "String by reference". "char*"
-	params at: 3 put: VDWord new "Pointer". "size_t*"
-
-	self
-		newProcedureNamed: #'pn_message_save_text'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_message_save_amqp(pn_message_t *message, char *data, size_t *size);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VDWord new "String by reference". "char*"
-	params at: 3 put: VDWord new "Pointer". "size_t*"
-
-	self
-		newProcedureNamed: #'pn_message_save_amqp'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_message_save_json(pn_message_t *message, char *data, size_t *size);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VDWord new "String by reference". "char*"
-	params at: 3 put: VDWord new "Pointer". "size_t*"
-
-	self
-		newProcedureNamed: #'pn_message_save_json'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN pn_data_t *pn_message_instructions(pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_instructions'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Pointer").
-
-	"PN_EXTERN pn_data_t *pn_message_annotations(pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_annotations'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Pointer").
-
-	"PN_EXTERN pn_data_t *pn_message_properties(pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_properties'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Pointer").
-
-	"PN_EXTERN pn_data_t *pn_message_body(pn_message_t *msg);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-
-	self
-		newProcedureNamed: #'pn_message_body'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Pointer").
-
-	"PN_EXTERN int pn_message_decode(pn_message_t *msg, const char *bytes, size_t size);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: (VString "concreteClass" passedBy: #reference). "const char*"
-	params at: 3 put: VDWord new. "size_t"
-
-	self
-		newProcedureNamed: #'pn_message_decode'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_message_encode(pn_message_t *msg, char *bytes, size_t *size);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_message_t*"
-	params at: 2 put: VDWord new "String by reference". "char*"
-	params at: 3 put: VDWord new "Pointer". "size_t*"
-
-	self
-		newProcedureNamed: #'pn_message_encode'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN ssize_t pn_message_data(char *dst, size_t available, const char *src, size_t size);"
-	params := Array new: 4.
-	params at: 1 put: VDWord new "String by reference". "char*"
-	params at: 2 put: VDWord new. "size_t"
-	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
-	params at: 4 put: VDWord new. "size_t"
-
-	self
-		newProcedureNamed: #'pn_message_data'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-
-!"end initializeMessage "
-
-
-initializeError
-	| variables params |
-
-	"PN_EXTERN const char *pn_code(int code);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new. "int"
-
-	self
-		newProcedureNamed: #'pn_code'
-		paramVars: params	
-		callingConvention: #C 
-		returns: ((VString "concreteClass" passedBy: #reference)).
-
-	"PN_EXTERN pn_error_t *pn_error(void);"
-	params := Array new: 0.
-
-	self
-		newProcedureNamed: #'pn_error'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Pointer").
-
-	"PN_EXTERN void pn_error_free(pn_error_t *error);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-
-	self
-		newProcedureNamed: #'pn_error_free'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-	"PN_EXTERN void pn_error_clear(pn_error_t *error);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-
-	self
-		newProcedureNamed: #'pn_error_clear'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new "Uknown").
-
-	"PN_EXTERN int pn_error_set(pn_error_t *error, int code, const char *text);"
-	params := Array new: 3.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-	params at: 2 put: VDWord new. "int"
-	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
-
-	self
-		newProcedureNamed: #'pn_error_set'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_error_vformat(pn_error_t *error, int code, const char *fmt, va_list ap);"
-	params := Array new: 4.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-	params at: 2 put: VDWord new. "int"
-	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
-	params at: 4 put: VDWord new "Uknown". "va_list"
-
-	self
-		newProcedureNamed: #'pn_error_vformat'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_error_format(pn_error_t *error, int code, const char *fmt, ...);"
-	params := Array new: 4.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-	params at: 2 put: VDWord new. "int"
-	params at: 3 put: (VString "concreteClass" passedBy: #reference). "const char*"
-	params at: 4 put: VDWord new "Uknown". "array"
-
-	self
-		newProcedureNamed: #'pn_error_format'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN int pn_error_code(pn_error_t *error);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-
-	self
-		newProcedureNamed: #'pn_error_code'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-	"PN_EXTERN const char *pn_error_text(pn_error_t *error);"
-	params := Array new: 1.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-
-	self
-		newProcedureNamed: #'pn_error_text'
-		paramVars: params	
-		callingConvention: #C 
-		returns: ((VString "concreteClass" passedBy: #reference)).
-
-	"PN_EXTERN int pn_error_copy(pn_error_t *error, pn_error_t *src);"
-	params := Array new: 2.
-	params at: 1 put: VDWord new "Pointer". "pn_error_t*"
-	params at: 2 put: VDWord new "Pointer". "pn_error_t*"
-
-	self
-		newProcedureNamed: #'pn_error_copy'
-		paramVars: params	
-		callingConvention: #C 
-		returns: (VDWord new).
-
-
-!"end initializeError "
 
 
 struct_pn_decimal128_t

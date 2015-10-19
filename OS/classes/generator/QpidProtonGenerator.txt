@@ -1,1 +1,2 @@
+CObject.cls
 QpidProtonGenerator.cls

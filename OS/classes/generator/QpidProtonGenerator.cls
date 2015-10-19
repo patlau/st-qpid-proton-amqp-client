@@ -117,7 +117,7 @@ generate: headerFiles
 	self prepareModel.
 	
 	self writeOS7.
-"	self writeOS8."
+	self writeOS8.
 !"end generate: "
 
 
@@ -753,7 +753,7 @@ writeOS7DLLClass
 	source append: Tab + 'self initializeStructs.' + CrLf.
 	source append: ((includes keys sort collect: [:each | Tab + 'self initialize' + each capitalize + '.'])
 		asArray asStringSeparator: CrLf).
-	out writeMethodName: each name source: source asString.
+	out writeMethodName: #initialize source: source asString.
 	
 	source := StreamString new.
 	source append: #initializeStructs.
@@ -791,7 +791,7 @@ writeOS7DLLClass
 		each params isEmpty not ifTrue: [
 			selector := selector + ':'.
 		].
-		selector := selector + ((each params collect: [:each | ' ' + each name + ' ']) asArray asStringSeparator: 'with:').
+		selector := selector + ((each params collect: [:p | ' ' + p name + ' ']) asArray asStringSeparator: 'with:').
 		
 		source := StreamString new.
 		source append: selector.
@@ -803,7 +803,7 @@ writeOS7DLLClass
 		source append: '"'.
 		source append: CrLf.
 		source append: Tab + '^self call: #' + each name + (each params isEmpty ifTrue: [' with: Array new.'] ifFalse: [
-			 ' with: (Array with: ' + ((each params collect: [:each | each name]) asArray asStringSeparator: ' with: ') + ').']).
+			 ' with: (Array with: ' + ((each params collect: [:p | p name]) asArray asStringSeparator: ' with: ') + ').']).
 		out writeMethodName: selector source: source asString.
 	].
 

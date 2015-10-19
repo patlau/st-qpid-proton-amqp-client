@@ -1,1 +1,2 @@
 test\AMQPConnectionTest.cls
+test\QpidProtonMessengerTest.cls

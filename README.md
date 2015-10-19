@@ -8,7 +8,7 @@ Currently I have some working examples for ObjectStudio 7 with a subset of Qpid 
 Work for VisualWorks/ObjectStudio8 is in progress.
 
 The client is based on following packages:
-- Generator: Generating library wrappers for Smalltalk using Qpid Proton include files
+- Generator: Generates library wrappers for Smalltalk using Qpid Proton include files
 - Qpid-Proton: Base class and generated wrapper classes
 - AMQP: Wrappers around the generated Qpid Proton classes which includes some custom functionality
 - MQ: Integration into Smalltalk environment for common Messaging patterns. Includes currently a Notification example (AMQP fanout).

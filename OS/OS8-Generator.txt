@@ -1,0 +1,7 @@
+classes\ext\Object2f.ext
+classes\ext\String2f.ext
+classes\qpid-proton\QpidProton.cls
+classes\generator\OS7-clsbldr.cls
+classes\generator\OS7-clsbld99.cls
+classes\generator\CObject.cls
+classes\generator\QpidProtonGenerator.cls
