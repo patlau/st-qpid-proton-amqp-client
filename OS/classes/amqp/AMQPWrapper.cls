@@ -22,8 +22,12 @@ destroy
 
 
 doesNotUnderstand: selector args: args
+"
+	OS8: I dont know how to convert Booleans to ints automatically.
+"
 	(self privateWrappedObject respondsTo: selector) ifTrue: [
-		^self privateWrappedObject perform: selector withArguments: args.
+		^self privateWrappedObject perform: selector withArguments: (args
+			collect: [:each | each isBoolean ifTrue: [each asParameter] ifFalse: [each]]).
 	].
 	^super doesNotUnderstand: selector args: args.
 !"end doesNotUnderstand:args: "

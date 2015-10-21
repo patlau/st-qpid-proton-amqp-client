@@ -1,3 +1,6 @@
+!System isInVW not ifTrue: [
+Structure2f.cls
+].
 AMQPConnection.cls
 AMQPWrapper.cls
 AMQPData.cls

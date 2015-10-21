@@ -1,4 +1,9 @@
+!System isInVW not ifTrue: [
 _include qpid-proton\QpidProton.txt
+]
+!System isInVW ifTrue: [
+QpidProton.pcl
+]
 _include qpid-admin\QpidAdmin.txt
 _include amqp\AMQP.txt
 _include mq\MQ.txt

@@ -49,6 +49,7 @@ initializeOS8
 	].
 	SystemTranscript open.
 "	TestRunner open."
+	System whenIdleSend: #recompileMethods to: QpidProtonDLL.
 !
 
 !"End of class methods block"

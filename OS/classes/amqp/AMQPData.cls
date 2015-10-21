@@ -91,10 +91,11 @@ putString: aString
 	
 	self log: #trace key: #amqpdata msg: 'PutString:' ++ aString.
 	
-	bytes := ((Structure newLike: QpidProtonLibrary struct_pn_bytes_t)
-		at: #size put: aString size;
-		at: #start put: aString "asByteArray";
-		yourself).
+	bytes := QpidProtonLibrary struct_pn_bytes_t new.
+	bytes
+		memberAt: #size put: aString size;
+		memberAt: #start put: aString "asByteArray";
+		yourself.
 
 	^data putString: bytes.
 !"end putString: "
