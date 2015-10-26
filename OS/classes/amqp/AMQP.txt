@@ -8,3 +8,4 @@ AMQPError.cls
 AMQPMessage.cls
 AMQPMessenger.cls
 AMQPSubscription.cls
+AMQPQueue.cls

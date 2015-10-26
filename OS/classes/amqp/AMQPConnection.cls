@@ -1,10 +1,13 @@
 Object subclass: #AMQPConnection
 instanceVariableNames: '
 	address
-	window
 	messenger
 	subscription
 	timeout
+	windowSize
+	incomingQueue
+	outgoingQueue
+	track
 '
 classVariableNames: '
 	instances
@@ -17,6 +20,15 @@ poolDictionaries: '
 ! AMQPConnection class methods!
 
 
+connectAddress: aString
+	| obj |
+	obj := self new.
+	obj connect: aString.
+	^obj.
+
+!"end connectAddress: "
+
+
 connectAddress: aString timeout: anInteger
 	| obj |
 	obj := self new.
@@ -26,11 +38,39 @@ connectAddress: aString timeout: anInteger
 !"end connectAddress:timeout: "
 
 
+connectToReply: aMessage
+	| obj |
+	obj := self new.
+	obj connect: (self getReplyAddressFor: aMessage).
+	^obj.
+
+!"end connectToReply: "
+
+
 copyDLL
 	(ExternalLibrary respondsTo: #copyDLL:) ifTrue: [
 		^ExternalLibrary copyDLL: (Array with: 'qpid-proton').
 	].
 !"end copyDLL "
+
+
+getReplyAddressFor: aMessage
+"
+	Must replace port to match our port. 
+	
+	Problem:
+	- Qpid can not handle WebSocket and TCP transports on the same port.
+	
+	Current resoluation:
+	- Hardcoded replace 5673 with 5672. Should be configured using a lookup Dictionary or something similar.
+"
+	| replyTo |
+	
+	replyTo := aMessage replyTo.
+	replyTo ifNil: [^nil].
+	^replyTo asString copyReplaceAll: '5673' with: '5672'.
+
+!"end getReplyAddressFor: "
 
 
 guidGenerator
@@ -57,7 +97,7 @@ initialize
 
 new
 	| obj |
-	obj := super new.
+	obj := super new initialize.
 	
 	"For finalize"
 	instances add: obj.
@@ -109,20 +149,22 @@ test
 "
 
 	CS := 'amqp://192.168.88.33:5672/test'.
+	
+	[	| conn msg |
+		conn := AMQPConnection new.
+		conn connect: CS.
+		msg := conn receive: 1.
+		msg do: [:each | each print out.].
+		conn disconnect.
+	] fork.
 
+	CS := 'amqp://192.168.88.33:5672/test'.
+	
 	SS := AMQPConnection new.
 	SS connect: CS.
 	SS sendString: 'AAA'.
 	SS disconnect.
 	SS := nil.
-	
-	[	| conn msg |
-		conn := AMQPConnection new.
-		conn connect: CS.
-		msg := conn receive.
-		msg out.
-		conn disconnect.
-	] fork.
 !"end test "
 
 
@@ -246,6 +288,37 @@ testRPC
 !"end testRPC "
 
 
+testServerWeb
+"
+	'nothing' Test fuer Performance Messung.
+"
+(TT := [
+		| conn |
+		"Subscribe to named server queue"
+		conn := AMQPConnection connectAddress: 'amqp://192.168.88.33:5672/amq.topic' timeout: 30000.
+		Thread currentThread attributeAt: #'AMQP_CONNECTION' put: conn.
+		conn receiveForEverCallback: [:message |
+			| clientConn |
+			('SERVER: Received Request:' ++ message id ++ message subject ++ message body format) out.
+			clientConn := AMQPConnection connectToReply: message.
+			('SERVER: Send Response to' ++ message replyTo) out.
+			clientConn send: ((AMQPMessage new)
+				subject: message subject;
+				durable: false;
+				bodySet:  '{ "ts": "' + Timestamp now asString + '"}';
+				yourself).
+			clientConn disconnect.
+		].
+		conn disconnect.
+	] fork) waitUntilReady.
+
+"
+(TT attributeAt: #'AMQP_CONNECTION') interrupt.
+TT attributeAt: #'AMQP_TERMINATE' put: true.
+"
+!"end testServerWeb "
+
+
 !"End of class methods block"
 
 
@@ -296,6 +369,22 @@ finalize
 !"end finalize "
 
 
+incomingQueue
+	incomingQueue ifNil: [
+		incomingQueue := AMQPQueue new: messenger type: #in track: track.
+	].
+	^incomingQueue.
+!"end incomingQueue "
+
+
+initialize
+	windowSize := 1. "Could be separate for incomming/outgoing, but currently use same size for both"
+	timeout := 5000.
+	track := false.
+	
+!"end initialize "
+
+
 interrupt
 	self log: #trace key: #amqp msg: 'Interrupt'.
 	messenger ifNil: [^self].
@@ -308,9 +397,17 @@ log: traceSymbol key: keySymbol msg: msgStringOrSymbol
 !"end log:key:msg: "
 
 
+outgoingQueue
+	outgoingQueue ifNil: [
+		outgoingQueue := AMQPQueue new: messenger type: #out track: track.
+	].
+	^outgoingQueue.
+!"end outgoingQueue "
+
+
 receive
 	|  messages |
-	messages := self receive: self window.
+	messages := self receive: -1.
 	^messages.
 !"end receive "
 
@@ -320,6 +417,7 @@ receive: anInteger
 
 	self log: #trace key: #amqp msg: 'Receive: ' + anInteger.
 	
+	self incomingQueue window: anInteger. "Must be before subscribe for auto accept ?"
 	self subscribe.
 	
 "	('Messenger>>receive: ' + anInteger + ' (wait for 5000 ms)') out."
@@ -330,6 +428,21 @@ receive: anInteger
 !"end receive: "
 
 
+receiveForEverCallback: aBlock
+"
+	Only for tests.
+"
+	self incomingQueue window: self windowSize. "Must be before subscribe for auto accept ?"
+	self subscribe.
+	
+	[(Thread currentThread attributeAt: #'AMQP_TERMINATE') ~= true] whileTrue: [
+		[
+			self receiveLoopDo: aBlock.
+		] on: AMQPError do: [:ex | ex out ].
+	].
+!"end receiveForEverCallback: "
+
+
 receiveLoop: anInteger callback: aBlock
 "
 	Must first subscribe to something, before calling receive Loop!
@@ -338,16 +451,17 @@ receiveLoop: anInteger callback: aBlock
 	
 	self log: #trace key: #amqp msg: 'Receive Loop'.
 	messenger timeout: self timeout.
-	result := messenger receive: anInteger.
+	
+	result := self incomingQueue receive: anInteger.
 	result < 0 ifTrue: [(AMQPError newCode: result) signal].
 	
 	self log: #trace key: #amqp msg: 'Incoming:' ++ messenger incoming.
-	[messenger incoming > 0] whileTrue: [
+	[self incomingQueue size > 0] whileTrue: [
 		self log: #trace key: #amqp msg: 'Get Message'.
 		message := AMQPMessage new.
-		result := messenger get: message.
+		result := self incomingQueue get: message.
 		aBlock isNil ifTrue: [
-			('Message Received [ID=' + message id + ', SUBJECT=' + message subject + ', ADDRESS=' ++ message address ++ ' , BODY=' ++ message body format + ']') out.
+			(message print ++ message printBody) out.
 		] ifFalse: [
 			self log: #trace key: #amqp msg: 'Evaluate Callback block'.
 			aBlock value: message.
@@ -359,7 +473,7 @@ receiveLoop: anInteger callback: aBlock
 
 
 receiveLoopDo: aBlock
-	^self receiveLoop: self window callback: aBlock.
+	^self receiveLoop: self windowSize callback: aBlock.
 !"end receiveLoopDo: "
 
 
@@ -369,7 +483,7 @@ send: aMessage
 	self log: #trace key: #amqp msg: 'Send message'.
 	
 	messenger ifNil: [Exception raiseErrorString: 'NotConnected'].
-	messenger outgoingWindow: 1.
+	self outgoingQueue window: self windowSize. "Only track 1 message"
 	
 	aMessage address isNilOrBlank ifTrue: [
 		self log: #trace key: #amqp msg: 'Set address to ' + address.
@@ -377,19 +491,15 @@ send: aMessage
 	].
 
 	self log: #trace key: #amqp msg: 'Put message'.
-	result := messenger put: aMessage.
+	result := self outgoingQueue put: aMessage.
 	messenger check.
-	
-	t1 := messenger outgoingTracker.
 	
 	self log: #trace key: #amqp msg: 'Send'.
-	result := messenger send: -1.
+	result := self outgoingQueue sendAll.
 	messenger check.
 
-	result := messenger status: t1.	
-	result := (QpidProtonLibrary class pn_status_t keyAtValue: result).
-	
-	self log: #trace key: #amqp msg: 'Result:' ++ result.
+	result := self outgoingQueue statusSymbol.
+	self log: #trace key: #amqp msg: 'Status:' ++ result.
 	
 	^result.
 !"end send: "
@@ -413,16 +523,9 @@ sendString: aString
 !"end sendString: "
 
 
-setWindow: anInteger
-	window := anInteger.
-!"end setWindow: "
-
-
 subscribe
 
-	(messenger) ifNil: [Exception raiseErrorString: 'NotConnected'].
-	
-	messenger incomingWindow: self window.
+	(messenger) ifNil: [Exception raiseErrorString: 'NotConnected'].	
 	messenger timeout: self timeout.
 	
 	self log: #trace key: #amqp msg: 'Subscribe to ' ++ address.
@@ -450,9 +553,28 @@ timeout: anInteger
 !"end timeout: "
 
 
-window
-	^window ifNil: [1].
-!"end window "
+track
+	^track.
+
+!"end track "
+
+
+track: aBoolean
+	track := aBoolean.
+
+!"end track: "
+
+
+windowSize
+	^windowSize.
+
+!"end windowSize "
+
+
+windowSize: anInteger
+	windowSize := anInteger.
+
+!"end windowSize: "
 
 
 !"End of methods block"

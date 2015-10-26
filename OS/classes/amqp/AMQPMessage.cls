@@ -78,7 +78,11 @@ bodySet: anObject
 	].
 	
 	(anObject isString) ifTrue: [
-		self contentType: 'text/plain'.
+		(anObject indexOf: '{') = 1 ifTrue: [ "Assume it is JSON"
+			self contentType: 'application/json'. "Vendor specific: 'application/vnd+xxx'"
+		] ifFalse: [
+			self contentType: 'text/plain'.
+		].
 		body putString: anObject asString.
 	].
 	
@@ -108,6 +112,17 @@ id: anObject
 	id putString: anObject asString.
 
 !"end id: "
+
+
+print
+	^('Message [ID=' + self id + ', SUBJECT=' + self subject + ', ADDRESS=' ++ self address + ']').
+!"end print "
+
+
+printBody
+	^'BODY=' ++ self body format.
+
+!"end printBody "
 
 
 privateWrappedObject
